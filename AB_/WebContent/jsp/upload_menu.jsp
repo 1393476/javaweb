@@ -1,6 +1,3 @@
-<%@page import="java.io.FileOutputStream"%>
-<%@page import="java.io.FileInputStream"%>
-<%@page import="javax.imageio.stream.FileImageOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,9 +9,6 @@
 <title>H5画板</title>
 
 <script type="text/javascript" src="./colorpicker.min.js"></script>
-<%
-	String abc = request.getParameter("path");
-%>
 <link rel="stylesheet" type="text/css" href="./themes.css" />
 
 <style lang="">
@@ -30,6 +24,7 @@ body {
 }
 
 #canvas {
+	background-color: white;
 	margin: 15px;
 	float: left;
 }
@@ -75,6 +70,40 @@ button,#eraser {
 </style>
 </head>
 <body>
+	<div>
+	<a href="second.jsp?name1=id">
+		<%
+			//System.out.println((String)request.getAttribute("firstDir")+"--------------");
+			out.print("病人ID:" + (String) request.getAttribute("firstDir"));
+		%>
+		</a>
+	</div>
+	<div>
+		<a href="second.jsp?name1=sub"> <%
+ 	out.print("病人子文件夹:" + (String) request.getAttribute("sencondDir"));
+ %>
+		</a>
+	</div>
+	<form name="frmApp" action="second.jsp" id="frmAppId" mothed="post" />
+	<input id="test" type="hidden" name="test">
+	</form>
+	<select name="type"
+		onchange="show_sub(this.options[this.options.selectedIndex].value)">
+
+		<script>
+			for (var i = 1; i <= 500; i++) {
+				document.write("<option value='"+i+"'>" + i + "</option>");
+			}
+		</script>
+	</select>
+	<script>
+		function show_sub(v) {
+			var tmp = "testing";
+			document.getElementById("test").value = v;
+			var frm = document.getElementById("frmAppId"); // 获取表单
+			frm.submit(); // 对表单进行提交
+		}
+	</script>
 
 	<!-- 画板功能我自己写的，颜色选取器是github来的，数值拖动是脚本之家来的 -->
 
@@ -106,7 +135,6 @@ button,#eraser {
 		</div>
 	</div>
 
-	<%=request.getParameter("path")+"---------"%>
 
 	<script>
 		//初始画布
@@ -118,9 +146,7 @@ button,#eraser {
 
 		var canvas = document.getElementById('canvas');
 		var cvs = canvas.getContext('2d');
-		var addr = "url(/upload/0001.jpg)"; 
 
-		canvas.style.backgroundImage = addr;
 		//画画
 		canvas.onmouseenter = function() {
 
@@ -241,7 +267,6 @@ button,#eraser {
 			formData.append('file', blob, '0001.jpg');
 			xhr.open('post', 'UploadServlet');
 			xhr.send(formData);
-
 		}
 		//图片下载操作,指定图片类型
 		function download(type) {

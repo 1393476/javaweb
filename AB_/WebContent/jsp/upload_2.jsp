@@ -67,7 +67,7 @@ button, #eraser {
 }
 
 #change_pen_width {
-	width: 264px;
+	width: 264px; 
 	float: left;
 }
 </style>
@@ -79,7 +79,7 @@ button, #eraser {
 	String[] ls={"a","b","c"};
 	for (String typeVo : ls) {%>
 	<option value="<%=typeVo%>"><%=typeVo%></option>
-	<%
+	<% 
 	}
 	%>
 	</select>

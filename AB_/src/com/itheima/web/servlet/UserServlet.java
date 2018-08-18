@@ -159,10 +159,10 @@ public class UserServlet extends BaseServlet {
 		//4.将user放入session中 重定向
 		request.getSession().setAttribute("user", user);
 		request.getSession().setAttribute("username", user.getUsername());
-		response.sendRedirect(request.getContextPath()+"/");//  /store
-		//ResourceBundle resource = ResourceBundle.getBundle("peizhi");
-		//String source_path = resource.getString("source_path"); 
-		//response.sendRedirect(source_path);
+		//response.sendRedirect(request.getContextPath()+"/");//  /store
+		ResourceBundle resource = ResourceBundle.getBundle("peizhi");
+		String source_path = resource.getString("tree_path"); 
+		response.sendRedirect(source_path);
 		return null;
 	}
 
