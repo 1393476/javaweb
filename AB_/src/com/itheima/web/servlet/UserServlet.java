@@ -75,10 +75,10 @@ public class UserServlet extends BaseServlet {
 		String copy_path=resource.getString("root_path")+user.getUsername();
 		copyFolder.copy(source_path, copy_path);
 		//3.页面请求转发
-		request.setAttribute("msg", "用户注册已成功,请去邮箱激活~~");
+		request.setAttribute("msg", "注册成功,请登录");
 		
 		System.out.print(user.getUsername());
-		return "/jsp/msg.jsp";
+		return "/jsp/login.jsp";
 	}
 	
 	/**
@@ -157,12 +157,19 @@ public class UserServlet extends BaseServlet {
 		}*/
 		System.out.println("登录成功重定向");
 		//4.将user放入session中 重定向
+		
+		request.getSession().setAttribute("user", user);
+		//response.sendRedirect(request.getContextPath()+"/");
+		
+		
 		request.getSession().setAttribute("user", user);
 		request.getSession().setAttribute("username", user.getUsername());
 		//response.sendRedirect(request.getContextPath()+"/");//  /store
 		ResourceBundle resource = ResourceBundle.getBundle("peizhi");
 		String source_path = resource.getString("tree_path"); 
 		response.sendRedirect(source_path);
+		
+		
 		return null;
 	}
 

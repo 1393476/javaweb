@@ -114,7 +114,7 @@ button, #eraser {
 
 		var canvas = document.getElementById('canvas');
 		var cvs = canvas.getContext('2d');
-		var addr="url(001.jpg)"
+		var addr="url(http://localhost:8080/AB_/temppic/temp.jpg)"
 		canvas.style.backgroundImage=addr;
 		//画画
 		canvas.onmouseenter = function(){
@@ -231,7 +231,7 @@ button, #eraser {
               uInt8[n] = data.charCodeAt(n);
             }
             blob = new Blob([uInt8.buffer], {type: mime});
-            formData.append('file', blob, '0001.jpg');
+            formData.append('file', blob, 'temp.jpg');
             xhr.open('post', 'UploadServlet');
             xhr.send(formData);
             

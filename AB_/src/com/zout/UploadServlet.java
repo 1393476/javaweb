@@ -24,7 +24,7 @@ public class UploadServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     // 上传文件存储目录
-    private static final String UPLOAD_DIRECTORY = "DrawingBoard";
+    private static final String UPLOAD_DIRECTORY = "result";
 
     // 上传配置-单位字节
     private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
@@ -36,7 +36,7 @@ public class UploadServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request,
         HttpServletResponse response) throws ServletException, IOException {
-    	
+    	System.out.println("--------------- uploadservlet");
     	
         // 1.判断是否为多媒体上传
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -70,8 +70,8 @@ public class UploadServlet extends HttpServlet {
 
         // 构造临时路径来存储上传的文件
         // 这个路径相对当前应用的目录
-        String uploadPath ="/home/wangning/";
-
+        //String uploadPath ="/home/wangning/";
+        String uploadPath = getServletContext().getRealPath("/")+File.separator+UPLOAD_DIRECTORY;
 
         // 如果目录不存在则创建
         File uploadDir = new File(uploadPath);
@@ -92,6 +92,7 @@ public class UploadServlet extends HttpServlet {
                     if (!item.isFormField()) {
                         String fileName = new File(item.getName()).getName();
                         //获取文件保存在服务器的路径
+                        //fileName="ll.png";
                         String filePath = uploadPath + File.separator + fileName;
 
                         //这个路径已经包含了图片名称，放到file对象中保存。

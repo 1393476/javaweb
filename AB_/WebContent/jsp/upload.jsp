@@ -118,7 +118,7 @@ button,#eraser {
 
 		var canvas = document.getElementById('canvas');
 		var cvs = canvas.getContext('2d');
-		var addr = "url(/upload/0001.jpg)"; 
+		var addr = "url(/upload/2.png)"; 
 
 		canvas.style.backgroundImage = addr;
 		//画画
@@ -238,9 +238,10 @@ button,#eraser {
 			blob = new Blob([ uInt8.buffer ], {
 				type : mime
 			});
-			formData.append('file', blob, '0001.jpg');
-			xhr.open('post', 'UploadServlet');
+			formData.append('file', blob, 'test.jpg');
+			xhr.open('post', 'http://192.168.222.141:8080/AB_/UploadServlet');
 			xhr.send(formData);
+			//alert("successful");
 
 		}
 		//图片下载操作,指定图片类型

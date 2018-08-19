@@ -47,15 +47,9 @@ font {
 				<div class="col-md-4">
 					<img src="${pageContext.request.contextPath}/img/logo2.png" />
 				</div>
-				<div class="col-md-5">
-					<img src="${pageContext.request.contextPath}/img/header.png" />
-				</div>
+				
 				<div class="col-md-3" style="padding-top:20px">
-					<ol class="list-inline">
-						<li><a href="login.htm">登录</a></li>
-						<li><a href="register.htm">注册</a></li>
-						<li><a href="cart.htm">购物车</a></li>
-					</ol>
+					
 				</div>
 			</div>
 			<!--
@@ -73,22 +67,14 @@ font {
 								<span class="icon-bar"></span>
 								<span class="icon-bar"></span>
 							</button>
-							<a class="navbar-brand" href="#">首页</a>
+							
 						</div>
 
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="#">手机数码<span class="sr-only">(current)</span></a></li>
-								<li><a href="#">电脑办公</a></li>
-								<li><a href="#">电脑办公</a></li>
-								<li><a href="#">电脑办公</a></li>
-							</ul>
+							
 							<form class="navbar-form navbar-right" role="search">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Search">
-								</div>
-								<button type="submit" class="btn btn-default">Submit</button>
+								
 							</form>
 
 						</div>
@@ -111,7 +97,7 @@ font {
 
 
 	<div class="col-md-8" style="background:#fff;padding:40px 80px;margin:30px;border:7px solid #ccc;">
-		<font>会员注册</font>USER REGISTER
+		<font>会员注册</font>  USER REGISTER
 		<form class="form-horizontal" style="margin-top:5px;" action="${pageContext.request.contextPath }/user?method=regist" method="post">
 			 <div class="form-group">
 			    <label for="username" class="col-sm-2 control-label">用户名</label>
@@ -154,25 +140,9 @@ font {
 			</label>
 			</div>
 			  </div>		
-			  <div class="form-group">
-			    <label for="date" class="col-sm-2 control-label">出生日期</label>
-			    <div class="col-sm-6">
-			      <input type="date" class="form-control"  name="birthday">		      
-			    </div>
-			  </div>
 			  
-			  <div class="form-group">
-			    <label for="date" class="col-sm-2 control-label">验证码</label>
-			    <div class="col-sm-3">
-			      <input type="text" class="form-control"  >
-			      
-			    </div>
-			    <div class="col-sm-2">
-			    <img src="${pageContext.request.contextPath}/image/captcha.jhtml"/>
-			    </div>
-			    
-			  </div>
-			 
+			  
+			  
 			  <div class="form-group">
 			    <div class="col-sm-offset-2 col-sm-10">
 			      <input type="submit"  width="100" value="注册" name="submit" border="0"
@@ -190,9 +160,7 @@ font {
 
 	  
 	
-	<div style="margin-top:50px;">
-			<img src="${pageContext.request.contextPath}/image/footer.jpg" width="100%" height="78" alt="我们的优势" title="我们的优势" />
-		</div>
+
 
 		<div style="text-align: center;margin-top: 5px;">
 			<ul class="list-inline">
@@ -201,14 +169,13 @@ font {
 				<li><a>招贤纳士</a></li>
 				<li><a>法律声明</a></li>
 				<li><a>友情链接</a></li>
-				<li><a target="_blank">支付方式</a></li>
-				<li><a target="_blank">配送方式</a></li>
+
 				<li><a>服务声明</a></li>
 				<li><a>广告声明</a></li>
 			</ul>
 		</div>
 		<div style="text-align: center;margin-top: 5px;margin-bottom:20px;">
-			Copyright &copy; 2005-2016 传智商城 版权所有
+			Copyright &copy; 2018 版权所有
 		</div>
 
 </body></html>

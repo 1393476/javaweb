@@ -48,7 +48,8 @@
 				</ol>
 			</div>
 		</div>
-
+		
+        <%-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 		<%!public String path = null;%>
 		<%
 			path = request.getParameter("path");
@@ -66,11 +67,11 @@
 			output.flush();
 			output.close();
 			input.close();
-		%>
+		%>  --%>
 		<jsp:include page="upload.jsp" flush="ture">
 			<jsp:param value="${path}" name="path" />
 		</jsp:include>
-
+        
 
 
 	</div>
