@@ -49,8 +49,8 @@
 			</div>
 		</div>
 		
-        <%-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-		<%!public String path = null;%>
+        <%-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+        b
 		<%
 			path = request.getParameter("path");
 		%>
