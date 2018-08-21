@@ -23,7 +23,7 @@
 
 <body>
 	<div class="container-fluid">
-
+<h1 style="width:100%;text-align:center;font-weight:bold;background: gray">大智慧医疗标注系统</h1>
 		<!--
             	时间：2015-12-30
             	描述：菜单栏
@@ -48,7 +48,10 @@
 				</ol>
 			</div>
 		</div>
-		
+		<div>
+	        <input type=button onclick="top.location='http://localhost:8080/test_tomcat//TomcatTest/HelloServlet?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000','_top'""  value="返回主目录"  style = "
+			float: right;background-color:white;">
+	       </div>
         <%-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
         b
 		<%
