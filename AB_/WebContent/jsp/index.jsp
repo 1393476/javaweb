@@ -18,12 +18,33 @@
 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"
 	type="text/javascript"></script>
+	<%-- 
+	<%
+			String path = request.getParameter("path");
+			if(path!=null){
+				FileInputStream input = new FileInputStream(path);
+				FileOutputStream output = new FileOutputStream(
+						"/home/wangning/001.jpg");
+				byte[] b = new byte[1024 * 5];
+				int len;
+				while ((len = input.read(b)) != -1) {
+					output.write(b, 0, len);
+				}
+				output.flush();
+				output.close();
+				input.close();
+			}
+
+			
+		%>
+		--%>
 
 </head>
 
 <body>
 	<div class="container-fluid">
-<h1 style="width:100%;text-align:center;font-weight:bold;background: gray">大智慧医疗标注系统</h1>
+		<h1
+			style="width: 100%; text-align: center; font-weight: bold; background: gray">大智慧医疗标注系统</h1>
 		<!--
             	时间：2015-12-30
             	描述：菜单栏
@@ -49,32 +70,16 @@
 			</div>
 		</div>
 		<div>
-	        <input type=button onclick="top.location='http://localhost:8080/test_tomcat//TomcatTest/HelloServlet?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000','_top'""  value="返回主目录"  style = "
-			float: right;background-color:white;">
-	       </div>
-        <%-- aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-        b
-		<%
-			path = request.getParameter("path");
-		%>
-		<%
-			String path = request.getParameter("path");
-			FileInputStream input = new FileInputStream(path);
-			FileOutputStream output = new FileOutputStream(
-					"/home/wangning/myworkspace/AB_/WebContent/jsp/001.jpg");
-			byte[] b = new byte[1024 * 5];
-			int len;
-			while ((len = input.read(b)) != -1) {
-				output.write(b, 0, len);
-			}
-			output.flush();
-			output.close();
-			input.close();
-		%>  --%>
+			<input type=button
+				onclick="top.location='http://localhost:8080/test_tomcat//TomcatTest/HelloServlet?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000','_top'"
+				"  value="返回主目录" style="float: right; background-color: white;">
+		</div>
+		<%-- --%>
+		
 		<jsp:include page="upload.jsp" flush="ture">
 			<jsp:param value="${path}" name="path" />
 		</jsp:include>
-        
+
 
 
 	</div>

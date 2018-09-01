@@ -54,7 +54,7 @@ public class HelloServlet extends HttpServlet {
 		String menu = FileTree.tree(f, parameter,request,response);
 		System.out.println(menu+"--menu");
 		response.getWriter().write(
-				"<html><head></head><body>" +"<div>"+path+"</div>"+ menu + "</body></html>");
+				"<html><head></head><body>" +"<div style='text-align:center'>"+path+"</div>"+ menu + "</body></html>");
 	}
 
 	/**

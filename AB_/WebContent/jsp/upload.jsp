@@ -119,7 +119,7 @@ button,#eraser {
 
 		var canvas = document.getElementById('canvas');
 		var cvs = canvas.getContext('2d');
-		var addr = "url(/upload/2.png)"; 
+		var addr = "url(/upload/001.jpg)"; 
 
 		canvas.style.backgroundImage = addr;
 		//画画

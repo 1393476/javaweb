@@ -70,8 +70,8 @@ public class UploadServlet extends HttpServlet {
 
         // 构造临时路径来存储上传的文件
         // 这个路径相对当前应用的目录
-        //String uploadPath ="/home/wangning/";
-        String uploadPath = getServletContext().getRealPath("/")+File.separator+UPLOAD_DIRECTORY;
+        String uploadPath ="/home/wangning/lisan/";
+        //String uploadPath = getServletContext().getRealPath("/")+File.separator+UPLOAD_DIRECTORY;
 
         // 如果目录不存在则创建
         File uploadDir = new File(uploadPath);
@@ -93,7 +93,7 @@ public class UploadServlet extends HttpServlet {
                         String fileName = new File(item.getName()).getName();
                         //获取文件保存在服务器的路径
                         //fileName="ll.png";
-                        String filePath = uploadPath + File.separator + fileName;
+                        String filePath = uploadPath + fileName;
 
                         //这个路径已经包含了图片名称，放到file对象中保存。
                         File storeFile = new File(filePath);
