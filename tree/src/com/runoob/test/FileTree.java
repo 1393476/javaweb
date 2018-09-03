@@ -1,6 +1,8 @@
 package com.runoob.test;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
@@ -33,6 +35,20 @@ public class FileTree {
 		if (childs==null) {
 			System.out.println(f.getAbsolutePath()+"-----path");
 			//response.addHeader("path", f.getAbsolutePath());
+			String path=f.getAbsolutePath();
+			if(path!=null){			
+				FileInputStream input = new FileInputStream(path);
+				FileOutputStream output = new FileOutputStream(
+						"/home/wangning/001.jpg");
+				byte[] b = new byte[1024 * 5];
+				int len;
+				while ((len = input.read(b)) != -1) {
+					output.write(b, 0, len);
+				}
+				output.flush();
+				output.close();
+				input.close();
+			}
 			response.sendRedirect("http://localhost:8080/AB_/jsp/index_1.jsp?path="+f.getAbsolutePath());
 			
 			return f.getAbsolutePath();
