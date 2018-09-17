@@ -1,3 +1,4 @@
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.itheima.domain.User"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.FileInputStream"%>
@@ -18,40 +19,25 @@
 	type="text/javascript"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"
 	type="text/javascript"></script>
-	<%-- 
-	<%
-			String path = request.getParameter("path");
-			if(path!=null){
-				FileInputStream input = new FileInputStream(path);
-				FileOutputStream output = new FileOutputStream(
-						"/home/wangning/001.jpg");
-				byte[] b = new byte[1024 * 5];
-				int len;
-				while ((len = input.read(b)) != -1) {
-					output.write(b, 0, len);
-				}
-				output.flush();
-				output.close();
-				input.close();
-			}
 
-			
-		%>
-		--%>
 
 </head>
 
 <body>
 	<div class="container-fluid">
-		<h1
-			style="width: 100%; text-align: center; font-weight: bold; background: gray">大智慧医疗标注系统</h1>
+		<h1 style="width: 100%; text-align: center; font-weight: bold;">大智慧医疗标注系统</h1>
 		<!--
             	时间：2015-12-30
             	描述：菜单栏
             -->
 		<div class="container-fluid">
-
-			<div class="col-md-3" style="padding-top: 20px">
+			<%--
+				//从目录树来的session,得到选择的路径
+			String path=(String)session.getAttribute("cur_Path");
+			ArrayList<String> paths=(ArrayList<String>)session.getAttribute("cur_paths");
+			System.out.print(path+"---------------------"+paths+"--------------paths"+session.getAttribute("username"));
+			--%>
+			<div class="col-md-3" style="padding-top: 20px; font-weight: bold;">
 				<ol class="list-inline">
 					<c:if test="${empty user }">
 						<li><a
@@ -71,17 +57,27 @@
 		</div>
 		<div>
 			<input type=button
-				onclick="top.location='http://localhost:8080/test_tomcat//TomcatTest/HelloServlet?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000','_top'"
+				onclick="top.location='http://localhost:8080/AB_/jsp/tree2.jsp?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000&index=is','_top'"
 				"  value="返回主目录" style="float: right; background-color: white;">
 		</div>
-		<%-- --%>
-		
-		<jsp:include page="upload.jsp" flush="ture">
+		<jsp:include page="upload.jsp" flush="true">
 			<jsp:param value="${path}" name="path" />
 		</jsp:include>
-
-
-
+		<%-- 
+		<%@include file="upload.jsp" %>
+		
+		--%>
+		<%-- 
+		<div><%@ include file="menuTree.jsp"%></div>
+          <jsp:include page="/TomcatTest/HelloServlet" flush="ture">
+			<jsp:param value="000" name="param0" />
+			<jsp:param value="000" name="param1" />
+			<jsp:param value="000" name="param2" />
+			<jsp:param value="000" name="param3" />
+			<jsp:param value="000" name="param4" />
+			<jsp:param value="000" name="param5" />
+			</jsp:include>
+			--%>
 	</div>
 	</div>
 </body>

@@ -1,8 +1,11 @@
+<%@page import="java.io.FileWriter"%>
+<%@page import="java.io.File"%>
 <%@page import="java.io.FileOutputStream"%>
 <%@page import="java.io.FileInputStream"%>
 <%@page import="javax.imageio.stream.FileImageOutputStream"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +13,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>H5画板</title>
-
+<script src="../js/jquery-1.11.3.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="./colorpicker.min.js"></script>
 <%
 	String abc = request.getParameter("path");
 %>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+  <script>
+  $(function() {
+	$( "#image" ).dialog({
+	    	width:592,
+	        height: 607,
+	        autoOpen:false
+	  	}); 
+	$( "#tools" ).dialog({autoOpen:false});
+    $( "#color" ).dialog({
+    	width:303,
+    	autoOpen:false
+  	});     
+  });
+  </script>
+
 <link rel="stylesheet" type="text/css" href="./themes.css" />
 
 <style lang="">
@@ -22,7 +44,7 @@ body {
 	width: 100%;
 	margin: 0;
 	padding: 0;
-	background-image: linear-gradient(to top right, red, blue); 
+	background-image: linear-gradient(to left, black, gray, black);
 }
 
 #container {
@@ -32,7 +54,6 @@ body {
 
 #canvas {
 	margin: 15px;
-	float: left;
 }
 
 #tool {
@@ -54,7 +75,7 @@ button,#eraser {
 	width: 264px;
 	text-align: center;
 	font-family: "微软雅黑";
-	font-size: 12px;
+	font-size: 18px;
 	font-weight: bold;
 	color: white;
 	padding-top: 10px;
@@ -76,18 +97,23 @@ button,#eraser {
 </style>
 </head>
 <body>
-
 	<!-- 画板功能我自己写的，颜色选取器是github来的，数值拖动是脚本之家来的 -->
-
+	<div style="color: #DFD; font-weight: bold;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前标注图片为:<%=request.getParameter("path")%></div>
+    <button id="addImage" width="36px">Image</button>
+    <button id="addColor" width="36px">Color</button>
+    <button id="addTools" width="36px">Tools</button>
 	<div id="container">
-		<canvas id="canvas" width="512px" height="512px"></canvas>
-
-		<div id="tool">
-			<div id="color">
+	    <div id= "image" title="Image" style="background-image: linear-gradient(to left, black, gray, black)">	  
+		<canvas id="canvas" width="512px" height="512px" style="border-style: dashed;"></canvas>
+		</div>
+		<div id="tool" >
+			<div id="color" title="ColorPicker" style="background-image: linear-gradient(to left, black, gray, black)">
 				<!-- FlexiColorPicker插件 https://github.com/DavidDurman/FlexiColorPicker -->
-				<div id="color-picker" class="cp-default"></div>
+				<div id="color-picker" class="cp-default">
+				</div>
 			</div>
-
+            <div id= "tools" title="Tools" style="background-image: linear-gradient(to left, black, gray, black)">
 			<div id="change_pen_width">
 				<!-- 修改了一下脚本之家的lijiao的代码 http://www.jb51.net/article/105845.htm -->
 				<div id="lineDiv" class="lineDiv">
@@ -96,20 +122,16 @@ button,#eraser {
 					</div>
 				</div>
 			</div>
-
-			<div id="eraser">使用橡皮擦</div>
+			<div id="eraser">橡皮擦</div>
 
 			<button id="clear_canvas">清空页面</button>
-
 			<!-- 保存图片的功能来自博客园的天马3798 http://www.cnblogs.com/tianma3798/p/6121894.html -->
 			<button id="save_canvas">保存图片</button>
-
+			<button id="next">下一张</button>
+            </div>
 		</div>
 	</div>
-
-	<%=request.getParameter("path")+"---------"%>
-
-	<script>
+	<script> 
 		//初始画布
 		var penWeight = 1;
 		var penColor = '#f00';
@@ -117,20 +139,37 @@ button,#eraser {
 		setBtnColor(); //初始化按钮颜色
 		var isEraser = false; //是否正在使用橡皮擦
 
-		var canvas = document.getElementById('canvas');
+		var image = document.getElementById('image');
+		var canvas = document.getElementById('canvas');		
 		var cvs = canvas.getContext('2d');
-		var addr = "url(/upload/001.jpg)"; 
-
-		canvas.style.backgroundImage = addr;
+		//var addr = "url(/upload/001.jpg)";
+		var imgObj = new Image();
+		var myName="<%=session.getAttribute("username")%>"; 
+		var imgObj = new Image();
+		var jpgPath="/upload/"+myName+"_001.jpg";
+		//var jpgPath="/upload/001.jpg";
+		imgObj.src = jpgPath;
+		//待图片加载完后，将其显示在canvas上
+		imgObj.onload = function() {
+			var cvs = canvas.getContext('2d');
+			cvs.drawImage(this, 0, 0);//this即是imgObj,保持图片的原始大小：470*480
+			var myName="<%=session.getAttribute("username")%>"; 
+			var jpgPath="/upload/"+myName+"_001.jpg";
+			var addr = "url("+jpgPath+")";
+			canvas.style.backgroundImage = addr;
+			//ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
+		}
+		//canvas.style.backgroundImage = addr;
+		//canvas.style.backgroundImage = imgObj;
 		//画画
 		canvas.onmouseenter = function() {
 
 			canvas.onmousedown = function(e) {
 
-				var start_x = e.clientX - canvas.offsetLeft
-						+ document.body.scrollLeft;
-				var start_y = e.clientY - canvas.offsetTop
-						+ document.body.scrollTop;
+				var start_x = e.clientX - canvas.offsetLeft + document.body.scrollLeft
+				-$("#image" ).offset().left;
+				var start_y = e.clientY - canvas.offsetTop + document.body.scrollTop
+				-$("#image" ).offset().top;
 
 				if (isEraser === false) {
 
@@ -148,12 +187,11 @@ button,#eraser {
 					cvs.clearRect(start_x - penWeight / 2, start_y - penWeight
 							/ 2, penWeight, penWeight);
 				}
-
 				canvas.onmousemove = function(e) {
-					var move_x = e.clientX - canvas.offsetLeft
-							+ document.body.scrollLeft;
-					var move_y = e.clientY - canvas.offsetTop
-							+ document.body.scrollTop;
+					var move_x = e.clientX - canvas.offsetLeft + document.body.scrollLeft
+				    -$("#image" ).offset().left;
+					var move_y =  e.clientY - canvas.offsetTop + document.body.scrollTop
+				    -$("#image" ).offset().top;
 
 					if (isEraser === false) {
 						cvs.lineTo(move_x, move_y);
@@ -177,7 +215,7 @@ button,#eraser {
 				canvas.onmousedown = null;
 			}
 		}
-
+       
 		//清空画布事件
 		var btn_clear = document.getElementById('clear_canvas');
 		btn_clear.onclick = function() {
@@ -185,7 +223,24 @@ button,#eraser {
 			canvas.width = canvas.height;
 			canvas.width = tempWidth;
 		}
-
+		 //添加对话框
+        var addImage = document.getElementById('addImage');
+        addImage.onclick = function(){
+        	if($( "#image" ).dialog('isOpen')==false){
+            	var tempWidth = canvas.width;
+    			canvas.width = canvas.height;
+    			canvas.width = tempWidth;
+            	}
+        	$( "#image" ).dialog("open");      	
+        }
+        var addColor = document.getElementById('addColor');
+        addColor.onclick = function(){
+        	$( "#color" ).dialog("open");
+        }
+        var addTools = document.getElementById('addTools');
+        addTools.onclick = function(){
+        	$( "#tools" ).dialog("open");
+        }
 		//随机生成按钮颜色
 		function setBtnColor() {
 			for (var i = 0; i < btn.length; i++) {
@@ -199,11 +254,11 @@ button,#eraser {
 					i -= 1;
 					continue;
 				}
-
+				random_color = "#000000";
 				btn[i].style.backgroundColor = random_color;
 			}
 		}
-
+		
 		//橡皮擦
 		var btn_eraser = document.getElementById('eraser');
 		btn_eraser.onclick = function() {
@@ -218,14 +273,46 @@ button,#eraser {
 				btn_eraser.style.fontWeight = "normal";
 			} else {
 				btn_eraser.style.backgroundColor = "#333333";
-				btn_eraser.textContent = "正在使用橡皮擦"
+				btn_eraser.textContent = "正在使用橡皮擦";
 				btn_eraser.style.color = "red";
-				btn_eraser.style.paddingTop = "20px";
-				btn_eraser.style.paddingBottom = "20px";
+				btn_eraser.style.paddingTop = "10px";
+				btn_eraser.style.paddingBottom = "10px";
 				btn_eraser.style.fontWeight = "bold";
 			}
 		}
 
+		/*下一张 */
+		var btn_next = document.getElementById('next');
+		btn_next.onclick = function() {
+
+			$.post('http://localhost:8080/Servlet_study/nextServlet', {"user":"<%=session.getAttribute("username")%>"},
+					function() {
+						alert("callback");
+						//回调
+						var myName="<%=session.getAttribute("username")%>"; 
+						alert(myName);
+						var imgObj = new Image();
+						var jpgPath="/upload/"+myName+"_001.jpg";
+						//var jpgPath="/upload/001.jpg";
+						addr = "url("+jpgPath+")";
+                            //this即是imgObj,保持图片的原始大小：470*480
+							//ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
+						canvas.style.backgroundImage = addr;
+						var now = new Date();
+						var exitTime = now.getTime() + 2500;
+							//alert(exitTime)
+						while (true) {
+								now = new Date();
+								if (now.getTime() > exitTime){
+									location.reload(true);
+									return;
+								}
+							}
+							
+						
+					});
+	
+		};
 		/*保存图片事件 <!-- 参考于博客园的天马3798 http://www.cnblogs.com/tianma3798/p/6121894.html */
 		var btn_save = document.getElementById('save_canvas');
 		btn_save.onclick = function() {
@@ -243,7 +330,6 @@ button,#eraser {
 			xhr.open('post', 'http://192.168.222.141:8080/AB_/UploadServlet');
 			xhr.send(formData);
 			//alert("successful");
-
 		}
 		//图片下载操作,指定图片类型
 		function download(type) {
@@ -279,35 +365,31 @@ button,#eraser {
 				} else {
 					//alert(xhr.readyState);
 				}
-			}
+			};
 			xhr.send(fd);
 		}
-
+		
 		/* 调色板插件 https://github.com/DavidDurman/FlexiColorPicker */
 		var cp = ColorPicker(
 				document.getElementById('color-picker'),
-
 				function(hex, hsv, rgb) {
-
 					console.log(hex); //十六进制颜色值
 					console.log(rgb);
-
 					if (rgb.r > 200 && rgb.g > 200 && rgb.b > 200) {
 						document.getElementById('canvas').style.border = "1px solid #ccc";
 					} else {
 						document.getElementById('canvas').style.border = "0px";
 					}
-
 					penColor = document.body.style.backgroundColor = hex; //设置画笔色
 				});
-
 		//初始化画板选取的颜色
 		cp.setHex("#00ff68");
-
+		//alert('cesi');
+		
 		/* 拖动数值 http://www.jb51.net/article/105845.htm */
 		var lineDiv = document.getElementById('lineDiv'); //长线条
 		var minDiv = document.getElementById('minDiv'); //小方块
-		var vals = document.getElementById("vals");
+		var vals = document.getElementById("vals");//数字
 
 		minDiv.onselectstart = function() {
 			return false;
@@ -361,20 +443,24 @@ button,#eraser {
 		window.addEventListener("mouseup", end);
 		//获取元素的绝对位置
 		function getPosition(node) {
-			var left = node.offsetLeft; //获取元素相对于其父元素的left值var left
+			var left = node.offsetLeft;a //获取元素相对于其父元素的left值var left
 			var top = node.offsetTop;
 			current = node.offsetParent; // 取得元素的offsetParent
 			while (current != null) {
 				left += current.offsetLeft;
 				top += current.offsetTop;
 				current = current.offsetParent;
-			}
+			}hha
 			return {
 				"left" : left,
 				"top" : top
 			};
 		}
+	
 	</script>
+
+
+
 
 </body>
 </html>

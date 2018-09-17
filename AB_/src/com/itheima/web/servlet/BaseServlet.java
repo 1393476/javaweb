@@ -39,7 +39,7 @@ public class BaseServlet extends HttpServlet {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("Baseservlet抛异常了");
+			System.out.println("Baseservlet抛异常了"+e.toString());
 			throw new RuntimeException();
 		} 
 

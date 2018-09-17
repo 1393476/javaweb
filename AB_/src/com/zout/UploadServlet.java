@@ -109,6 +109,9 @@ public class UploadServlet extends HttpServlet {
                     }
                 }
             }
+            File f = new File("/home/wangning/001.jpg");
+            f.delete();
+
         } catch (Exception ex) {
             request.setAttribute("message",
                     "错误信息: " + ex.getMessage());

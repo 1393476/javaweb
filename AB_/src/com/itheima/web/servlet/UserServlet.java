@@ -168,7 +168,7 @@ public class UserServlet extends BaseServlet {
 		ResourceBundle resource = ResourceBundle.getBundle("peizhi");
 		String source_path = resource.getString("tree_path"); 
 		response.sendRedirect(source_path);
-		
+		//request.getRequestDispatcher("/start.html");
 		
 		return null;
 	}

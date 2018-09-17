@@ -9,6 +9,15 @@
   	<filter-name>EncodingFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
+   
+  <filter>
+  	<filter-name>authorityControl</filter-name>
+  	<filter-class>com.itheima.web.filter.authorityControl</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>authorityControl</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>BaseServlet</display-name>
@@ -59,7 +68,16 @@
 	<url-pattern>/Servlet_study/UploadServlet</url-pattern>
   </servlet-mapping>
   
-  
+ <servlet>
+	<display-name>nextServlet</display-name>
+	<servlet-name>nextServlet</servlet-name>
+	<servlet-class>com.zout.nextServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+	<servlet-name>nextServlet</servlet-name>
+	<url-pattern>/Servlet_study/nextServlet</url-pattern>
+  </servlet-mapping> 
   <servlet>
 	<servlet-name>MuneTree</servlet-name>
 	<servlet-class>com.itheima.web.munetree</servlet-class>
@@ -69,5 +87,18 @@
 	<servlet-name>MuneTree</servlet-name>
 	<url-pattern>/MuneTree</url-pattern>
   </servlet-mapping>
+  
+  
+   <servlet>  
+     <!-- 类名 -->  
+    <servlet-name>HelloServlet</servlet-name>  
+    <!-- 所在的包 -->  
+    <servlet-class>com.runoob.test.HelloServlet</servlet-class>  
+  </servlet>  
+  <servlet-mapping>  
+    <servlet-name>HelloServlet</servlet-name>  
+    <!-- 访问的网址 -->  
+    <url-pattern>/TomcatTest/HelloServlet</url-pattern>  
+    </servlet-mapping>  
  
 </web-app>
