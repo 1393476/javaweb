@@ -18,25 +18,6 @@
 <%
 	String abc = request.getParameter("path");
 %>
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.9.1.js"></script>
-  <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-  <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
-  <script>
-  $(function() {
-	$( "#image" ).dialog({
-	    	width:592,
-	        height: 607,
-	        autoOpen:false
-	  	}); 
-	$( "#tools" ).dialog({autoOpen:false});
-    $( "#color" ).dialog({
-    	width:303,
-    	autoOpen:false
-  	});     
-  });
-  </script>
-
 <link rel="stylesheet" type="text/css" href="./themes.css" />
 
 <style lang="">
@@ -54,6 +35,7 @@ body {
 
 #canvas {
 	margin: 15px;
+	float: left;
 }
 
 #tool {
@@ -75,7 +57,7 @@ button,#eraser {
 	width: 264px;
 	text-align: center;
 	font-family: "微软雅黑";
-	font-size: 18px;
+	font-size: 12px;
 	font-weight: bold;
 	color: white;
 	padding-top: 10px;
@@ -100,20 +82,16 @@ button,#eraser {
 	<!-- 画板功能我自己写的，颜色选取器是github来的，数值拖动是脚本之家来的 -->
 	<div style="color: #DFD; font-weight: bold;">
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;当前标注图片为:<%=request.getParameter("path")%></div>
-    <button id="addImage" width="36px">Image</button>
-    <button id="addColor" width="36px">Color</button>
-    <button id="addTools" width="36px">Tools</button>
+
 	<div id="container">
-	    <div id= "image" title="Image" style="background-image: linear-gradient(to left, black, gray, black)">	  
-		<canvas id="canvas" width="512px" height="512px" style="border-style: dashed;"></canvas>
-		</div>
-		<div id="tool" >
-			<div id="color" title="ColorPicker" style="background-image: linear-gradient(to left, black, gray, black)">
+		<canvas id="canvas" width="512px" height="512px"></canvas>
+		<div id="tool">
+			<div id="color">
 				<!-- FlexiColorPicker插件 https://github.com/DavidDurman/FlexiColorPicker -->
 				<div id="color-picker" class="cp-default">
 				</div>
 			</div>
-            <div id= "tools" title="Tools" style="background-image: linear-gradient(to left, black, gray, black)">
+
 			<div id="change_pen_width">
 				<!-- 修改了一下脚本之家的lijiao的代码 http://www.jb51.net/article/105845.htm -->
 				<div id="lineDiv" class="lineDiv">
@@ -122,16 +100,25 @@ button,#eraser {
 					</div>
 				</div>
 			</div>
-			<div id="eraser">橡皮擦</div>
+			<div id="eraser">使用橡皮擦</div>
 
 			<button id="clear_canvas">清空页面</button>
 			<!-- 保存图片的功能来自博客园的天马3798 http://www.cnblogs.com/tianma3798/p/6121894.html -->
 			<button id="save_canvas">保存图片</button>
 			<button id="next">下一张</button>
-            </div>
+
 		</div>
 	</div>
-	<script> 
+
+
+
+
+
+
+
+	<script>
+	
+	
 		//初始画布
 		var penWeight = 1;
 		var penColor = '#f00';
@@ -139,8 +126,7 @@ button,#eraser {
 		setBtnColor(); //初始化按钮颜色
 		var isEraser = false; //是否正在使用橡皮擦
 
-		var image = document.getElementById('image');
-		var canvas = document.getElementById('canvas');		
+		var canvas = document.getElementById('canvas');
 		var cvs = canvas.getContext('2d');
 		//var addr = "url(/upload/001.jpg)";
 		var imgObj = new Image();
@@ -166,10 +152,10 @@ button,#eraser {
 
 			canvas.onmousedown = function(e) {
 
-				var start_x = e.clientX - canvas.offsetLeft + document.body.scrollLeft
-				-$("#image" ).offset().left;
-				var start_y = e.clientY - canvas.offsetTop + document.body.scrollTop
-				-$("#image" ).offset().top;
+				var start_x = e.clientX - canvas.offsetLeft
+						+ document.body.scrollLeft;
+				var start_y = e.clientY - canvas.offsetTop
+						+ document.body.scrollTop;
 
 				if (isEraser === false) {
 
@@ -185,20 +171,21 @@ button,#eraser {
 					cvs.stroke(); //画一个点
 				} else {
 					cvs.clearRect(start_x - penWeight / 2, start_y - penWeight
-							/ 2, penWeight, penWeight);
+							/ 2, penWeight*10, penWeight*10);
 				}
+
 				canvas.onmousemove = function(e) {
-					var move_x = e.clientX - canvas.offsetLeft + document.body.scrollLeft
-				    -$("#image" ).offset().left;
-					var move_y =  e.clientY - canvas.offsetTop + document.body.scrollTop
-				    -$("#image" ).offset().top;
+					var move_x = e.clientX - canvas.offsetLeft
+							+ document.body.scrollLeft;
+					var move_y = e.clientY - canvas.offsetTop
+							+ document.body.scrollTop;
 
 					if (isEraser === false) {
 						cvs.lineTo(move_x, move_y);
 						cvs.stroke(); //渲染
 					} else {
 						cvs.clearRect(move_x - penWeight / 2, move_y
-								- penWeight / 2, penWeight, penWeight);
+								- penWeight / 2, penWeight*10, penWeight*10);
 					}
 				}
 				canvas.onmouseup = function(e) {
@@ -215,7 +202,7 @@ button,#eraser {
 				canvas.onmousedown = null;
 			}
 		}
-       
+
 		//清空画布事件
 		var btn_clear = document.getElementById('clear_canvas');
 		btn_clear.onclick = function() {
@@ -223,24 +210,7 @@ button,#eraser {
 			canvas.width = canvas.height;
 			canvas.width = tempWidth;
 		}
-		 //添加对话框
-        var addImage = document.getElementById('addImage');
-        addImage.onclick = function(){
-        	if($( "#image" ).dialog('isOpen')==false){
-            	var tempWidth = canvas.width;
-    			canvas.width = canvas.height;
-    			canvas.width = tempWidth;
-            	}
-        	$( "#image" ).dialog("open");      	
-        }
-        var addColor = document.getElementById('addColor');
-        addColor.onclick = function(){
-        	$( "#color" ).dialog("open");
-        }
-        var addTools = document.getElementById('addTools');
-        addTools.onclick = function(){
-        	$( "#tools" ).dialog("open");
-        }
+
 		//随机生成按钮颜色
 		function setBtnColor() {
 			for (var i = 0; i < btn.length; i++) {
@@ -284,24 +254,31 @@ button,#eraser {
 		/*下一张 */
 		var btn_next = document.getElementById('next');
 		btn_next.onclick = function() {
+			//alert("next");
+			//var val1 = document.getElementsByName("key1").value;
+			//var val2 = document.getElementsByName("key2").value;
 
 			$.post('http://localhost:8080/Servlet_study/nextServlet', {"user":"<%=session.getAttribute("username")%>"},
 					function() {
 						alert("callback");
 						//回调
+						var canvas = document.getElementById('canvas');
+						var cvs = canvas.getContext('2d');
 						var myName="<%=session.getAttribute("username")%>"; 
 						alert(myName);
 						var imgObj = new Image();
 						var jpgPath="/upload/"+myName+"_001.jpg";
 						//var jpgPath="/upload/001.jpg";
-						addr = "url("+jpgPath+")";
-                            //this即是imgObj,保持图片的原始大小：470*480
+						imgObj.src = jpgPath;
+						//待图片加载完后，将其显示在canvas上
+						imgObj.onload = function() { 
+							var cvs = canvas.getContext('2d');
+							cvs.drawImage(this, 0, 0);//this即是imgObj,保持图片的原始大小：470*480
 							//ctx.drawImage(this, 0, 0,1024,768);//改变图片的大小到1024*768
-						canvas.style.backgroundImage = addr;
-						var now = new Date();
-						var exitTime = now.getTime() + 2500;
+							var now = new Date();
+							var exitTime = now.getTime() + 2500;
 							//alert(exitTime)
-						while (true) {
+							while (true) {
 								now = new Date();
 								if (now.getTime() > exitTime){
 									location.reload(true);
@@ -309,7 +286,7 @@ button,#eraser {
 								}
 							}
 							
-						
+						}
 					});
 	
 		};
@@ -443,14 +420,14 @@ button,#eraser {
 		window.addEventListener("mouseup", end);
 		//获取元素的绝对位置
 		function getPosition(node) {
-			var left = node.offsetLeft;a //获取元素相对于其父元素的left值var left
+			var left = node.offsetLeft; //获取元素相对于其父元素的left值var left
 			var top = node.offsetTop;
 			current = node.offsetParent; // 取得元素的offsetParent
 			while (current != null) {
 				left += current.offsetLeft;
 				top += current.offsetTop;
 				current = current.offsetParent;
-			}hha
+			}
 			return {
 				"left" : left,
 				"top" : top

@@ -23,13 +23,17 @@ public class FileTree {
 	static String css = "<style type=\"text/css\">#top,#bottom{clear:both;width:100%;height:auto;padding:20px 0;}</style>";
 
 	public static String tree(File f, String[] parameter,
-			HttpServletRequest request, HttpServletResponse response)
+			HttpServletRequest request, HttpServletResponse response,String htmlName)
 			throws ServletException, IOException {
 
 		String tree = "<div id = \"top\" align=\"center\"><h1>MEUN</h1></div><div><table width=\"1400\"  border=\"1\" align=\"center\">";
 		int j;
 		HttpSession session = request.getSession();
 		String usrename = (String) session.getAttribute("username");
+		if (usrename==null) {
+			usrename=htmlName;
+			System.out.println(usrename+"htmlname--------------------");
+		}
 		System.out.println(usrename + "------------------name wai");
 
 		for (j = 0; j < 6; j++) {
@@ -103,6 +107,7 @@ public class FileTree {
 						+ "<tr align=\"center\" valign=\"middle\" height=\"50\">";
 			}
 			String name = "0123456789";
+			System.out.println(usrename+"-------------------uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu");
 			if (childs[i].getName().length() >= 10) {
 				name = childs[i].getName().substring(0, 5);
 

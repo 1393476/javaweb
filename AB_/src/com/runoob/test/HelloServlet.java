@@ -34,12 +34,13 @@ public class HelloServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// 使用 GBK 设置中文正常显示
 
-		response.setCharacterEncoding("GBK");
+		//response.setCharacterEncoding("GBK");
 
 		String parameter[] = { "000", "000", "000", "000", "000","000" };
 		String path = "/home/wangning/";
 		int i;
-
+		String htmlName=request.getParameter("name");
+		System.out.println(htmlName+"------------html222222");
 		for (i = 0; i < 6; i++) {
 			parameter[i] = request.getParameter("param" + i);
 			//System.out.println(parameter[i]+"----parameter");
@@ -53,7 +54,7 @@ public class HelloServlet extends HttpServlet {
 		//System.out.println(i);
 
 		File f = new File(path);
-		String menu = FileTree.tree(f, parameter,request,response);
+		String menu = FileTree.tree(f, parameter,request,response,htmlName);
 		//System.out.println(menu+"--menu");
 		HttpSession session = request.getSession();
 		String nameString=(String) session.getAttribute("username");

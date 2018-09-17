@@ -57,7 +57,7 @@
 		</div>
 		<div>
 			<input type=button
-				onclick="top.location='http://localhost:8080/AB_//TomcatTest/HelloServlet?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000','_top'"
+				onclick="top.location='http://localhost:8080/AB_/jsp/tree2.jsp?param0=LUNA2016/&param1=000&param2=000&param3=000&param4=000&param5=000&index=is','_top'"
 				"  value="返回主目录" style="float: right; background-color: white;">
 		</div>
 		<jsp:include page="upload.jsp" flush="true">

@@ -13,6 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 /**
  * 统一编码
  * @author Administrator
@@ -31,6 +32,7 @@ public class EncodingFilter implements Filter {
 		//1.强转
 		HttpServletRequest request=(HttpServletRequest) req;
 		HttpServletResponse response=(HttpServletResponse) resp;
+		
 		
 		//2.放行
 		chain.doFilter(new MyRequest(request), response);
